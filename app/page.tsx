@@ -39,7 +39,9 @@ const scrapbookItems = [
   { id: 20, src: "/planeticket.png", alt: "Planeticket", x: -380, y: -100, rotate: 0, width: 250 },
   { id: 21, src: "/pinkbow.png", alt: "Pink Bow", x: -310, y: 170, rotate: -5, width: 140 },
   { id: 22, src: "/redheartpatch.png", alt: "Red Heart Patch", x: -440, y: 40, rotate: -45, width: 130 },
-  { id: 23, src: "/redtile.png", alt: "Red Tile", x: -320, y: -200, rotate: 0, width: 100 }
+  { id: 23, src: "/redtile.png", alt: "Red Tile", x: -320, y: -200, rotate: 0, width: 100 },
+  { id: 24, src: "/totoro.png", alt: "Totoro", x: 325, y: -220, rotate: 16, width: 100 },
+  { id: 25, src: "/clip.png", alt: "Clip", x: 205, y: -260, rotate: 6, width: 130 }
 ];
 
 export default function Home() {
@@ -64,27 +66,28 @@ export default function Home() {
     <div ref={containerRef} className="min-h-[200vh] relative overflow-hidden">
       
       {/* --- HEADER NAVIGATION --- */}
-      <header className="w-full flex justify-between items-center px-12 py-8 relative z-50">
-        <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-50 h-auto object-contain"/>
+      <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-8 z-50 pointer-events-auto">
+        <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-45 h-auto object-contain"/>
         
-        <nav className="flex gap-20 text-slate-500 text-xl font-[family-name:var(--font-playfair)] tracking-wide">
-          <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900">home</a>
-          <a href="#" className="hover:text-slate-800 transition-colors">about</a>
-          <a href="#" className="hover:text-slate-800 transition-colors">works</a>
-          <a href="#" className="hover:text-slate-800 transition-colors">shop</a>
-          <a href="#" className="hover:text-slate-800 transition-colors">contact</a>
+        <nav className="flex gap-15 text-slate-500 text-xl font-[family-name:var(--font-playfair)] tracking-wide mt-2">
+          <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-1">home</a>
+          <a href="#" className="hover:text-slate-800 transition-colors pb-1">about</a>
+          <a href="#" className="hover:text-slate-800 transition-colors pb-1">works</a>
+          <a href="#" className="hover:text-slate-800 transition-colors pb-1">shop</a>
+          <a href="#" className="hover:text-slate-800 transition-colors pb-1">contact</a>
         </nav>
       </header>
 
       {/* --- HERO COLLAGE SECTION --- */}
-      <section className="relative w-full h-[80vh] flex items-center justify-center mt-10">
-        
+      <section className="relative w-full h-screen flex items-center justify-center">
+      
+
         {/* profile image sa center */}
         <motion.div 
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-20 w-80 h-80 rounded-full overflow-hidden border-[6px] border-[#FCFAF8] shadow-2xl"
+          className="relative z-20 w-80 h-80 rounded-full overflow-hidden border-[6px] border-[#FCFAF8] shadow-2xl bg-white"
         >
            {/* PLACEHOLDER IMAGE */}
            <img src="/profile.png" alt="Zsofia Antolijao" className="w-full h-full object-cover"/>
@@ -117,21 +120,134 @@ export default function Home() {
           </motion.div>
         ))}
 
-        {/* Circular text overlays (zsofia antolijao) can be absolutely positioned here too */}
+      </section>
+
+      {/* --- INTERACTIVE FOLDERS SECTION --- */}
+      {/* Added z-30 so it sits above the background but below the fixed header */}
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-center pt-20 z-30">
+        
+        {/* FOLDER STACK CONTAINER */}
+        <div className="relative w-[800px] h-[500px] mt-10">
+          
+          {/* 1. Works Folder (Back Left) */}
+          {/* We wrap the motion.div in an <a> tag (or Next.js <Link> later) so clicking routes you */}
+          <a href="/works" className="absolute top-0 left-[10%] z-10 block">
+            <motion.div 
+              whileHover={{ y: -30 }} // Lifts the folder up on hover
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <img src="/folder-works.png" alt="Works Folder" className="w-[450px] drop-shadow-xl cursor-pointer" />
+            </motion.div>
+          </a>
+
+          {/* 2. Contact Folder (Back Right) */}
+          <a href="/contact" className="absolute top-[20px] right-[10%] z-20 block">
+            <motion.div 
+              whileHover={{ y: -30 }} 
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <img src="/folder-contact.png" alt="Contact Folder" className="w-[450px] drop-shadow-xl cursor-pointer" />
+            </motion.div>
+          </a>
+
+          {/* 3. About Folder (Front Center) */}
+          <a href="/about" className="absolute top-[60px] left-0 right-0 mx-auto z-30 flex justify-center block">
+            <motion.div 
+              whileHover={{ y: -30 }} 
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <img src="/folder-about.png" alt="About Folder" className="w-[750px] drop-shadow-2xl cursor-pointer" />
+            </motion.div>
+          </a>
+
+          {/* BOUNCING "CLICK A FOLDER" TEXT */}
+          <motion.div 
+            className="absolute -top-12 -right-12 z-40 w-48 h-48 pointer-events-none"
+            animate={{ y: [0, -15, 0] }} // Loops from 0px down to -15px and back
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {/* SVG to curve the text perfectly */}
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-md">
+              <path id="clickCurve" d="M 20,150 Q 100,50 180,150" fill="transparent" />
+              <text className="text-[1.8rem] font-[family-name:var(--font-caprasimo)] fill-red-900 tracking-wider">
+                <textPath href="#clickCurve" startOffset="10%">
+                  click a folder!
+                </textPath>
+              </text>
+            </svg>
+          </motion.div>
+        </div>
+
+        {/* SOCIAL CONNECTIONS */}
+        <div className="flex flex-col items-center mt-20 z-30 font-[family-name:var(--font-playfair)] text-slate-700">
+          <p className="text-xl mb-4 italic tracking-wide">let's connect!</p>
+          <div className="flex gap-4">
+            {/* Array mapping for bouncing icons */}
+            {[
+              { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
+              { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "#" },
+              { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "#" },
+              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" }
+            ].map((social, index) => (
+              <motion.a 
+                key={social.id} 
+                href={social.link}
+                className="block"
+                animate={{ y: [0, -8, 0] }} // The bounce!
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity, 
+                  ease: "easeInOut",
+                  delay: index * 0.2 // Staggers the bounce so they don't all jump at the exact same time
+                }}
+                whileHover={{ scale: 1.1 }} // Slight grow on hover
+              >
+                <img src={social.src} alt={social.alt} className="w-12 h-12 hover:drop-shadow-md transition-all" />
+              </motion.a>
+            ))}
+          </div>
+        </div>
 
       </section>
 
+      {/* --- FOOTER --- */}
+      {/* Using absolute bottom-0 so it sticks to the very bottom of the document */}
+      <footer className="absolute bottom-0 w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50">
+        <span className="italic">layout inspired by @ciaragan</span>
+        <a href="mailto:antolijaozsofia@gmail.com" className="hover:text-zinc-300 transition-colors underline underline-offset-4 decoration-1">
+          antolijaozsofia@gmail.com
+        </a>
+        <span>2026</span>
+      </footer>
+
       {/* --- SPINNING VINYL RECORD --- */}
-      <div className="fixed -bottom-48 -left-48 z-40 pointer-events-none">
-        {/* PLACEHOLDER VINYL */}
-        <img 
-          ref={vinylRef}
-          src="/vinyl.png" 
-          alt="Spinning Vinyl" 
-          className="w-[500px] h-[500px] opacity-90 drop-shadow-2xl"
-        />
-        <div className="absolute top-1/2 left-[120%] -translate-y-1/2 -rotate-45 text-xl font-[family-name:var(--font-playfair)] text-slate-500 tracking-widest whitespace-nowrap italic">
-          scroll down
+      <div className="fixed -bottom-[350px] -left-[350px] z-40 pointer-events-none">
+
+      {/* The ref is ONLY on this wrapper container now! */}
+        <div ref={vinylRef} className="relative w-[800px] h-[800px] flex items-center justify-center">
+
+      {/* The image no longer has a ref */}
+          <img 
+            src="/vinyl.png" 
+            alt="Spinning Vinyl" 
+            className="w-[500px] h-[500px] object-cover rounded-full drop-shadow-2xl"
+          />
+        
+       {/* The Curved SVG Text */}
+          <svg viewBox="0 0 200 200" className="absolute w-full h-full drop-shadow-sm">
+            <path 
+              id="textCurve" 
+              d="M 20,100 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" 
+              fill="transparent" 
+            />
+            <text className="text-[7px] font-[family-name:var(--font-playfair)] tracking-[0.25em] fill-slate-600 uppercase italic">
+              {/* Changed startOffset to 26% so it appears on the top right edge immediately */}
+              <textPath href="#textCurve" startOffset="22%">
+                scroll down
+              </textPath>
+            </text>
+          </svg>
+
         </div>
       </div>
 
