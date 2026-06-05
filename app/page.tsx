@@ -66,10 +66,11 @@ export default function Home() {
     <div ref={containerRef} className="w-full relative overflow-hidden">
       
       {/* --- HEADER NAVIGATION --- */}
-      <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-8 z-50 pointer-events-auto">
+      {/* mt-2 */}
+      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-12 pt-1 z-50 pointer-events-auto">
         <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-45 h-auto object-contain"/>
         
-        <nav className="flex gap-15 text-slate-500 text-xl font-[family-name:var(--font-playfair)] tracking-wide mt-2">
+        <nav className="flex gap-12 text-slate-500 text-xl font-[family-name:var(--font-playfair)] tracking-wide"> 
           <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-1">home</a>
           <a href="#" className="hover:text-slate-800 transition-colors pb-1">about</a>
           <a href="#" className="hover:text-slate-800 transition-colors pb-1">works</a>
@@ -79,7 +80,8 @@ export default function Home() {
       </header>
 
       {/* --- HERO COLLAGE SECTION --- */}
-      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+      {/* overflow-hidden */}
+      <section className="relative w-full h-screen flex items-center justify-center">
       
 
         {/* profile image sa center */}
@@ -121,49 +123,58 @@ export default function Home() {
 
       </section>
 
-      {/* --- INTERACTIVE FOLDERS SECTION --- */}
-      {/* Added z-30 so it sits above the background but below the fixed header */}
-      <section className="relative w-full min-h-screen flex flex-col items-center justify-center pt-24 z-30 pb-32">
+      {/* To make a folder bigger, change the w-[...] class on the <img> tag (I've bumped them up to 550px and 850px to start).
+          To move the folder up/down/left/right, change the top-[...] and left-[...]/right-[...] values on the <a> wrapper.
+          To align the text, tweak the top-[%] and left-[%] on the <span> */}
+      {/* --- 3. INTERACTIVE FOLDERS SECTION --- */}
+      <section className="relative w-full flex flex-col items-center justify-start z-30 pb-20">
         
-        {/* FOLDER STACK CONTAINER */}
-        <div className="relative w-[900px] h-[500px] flex justify-center">
+        {/* Increased wrapper height to accommodate bigger folders */}
+        <div className="relative w-[600px] h-[700px] flex justify-center mt-4">
           
-          {/* 1. Works Folder (Back Left) */}
-          {/* We wrap the motion.div in an <a> tag (or Next.js <Link> later) so clicking routes you */}
-          <a href="/works" className="absolute top-[20px] left-[8%] z-10 block">
-            <motion.div 
-              whileHover={{ y: -40 }} 
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative"
-            >
-              <img src="/folder-works.png" alt="Works Folder" className="w-[450px] drop-shadow-xl" />
-              {/* Text Label - Adjust top/left percentages if it doesn't perfectly align with your PNG tab */}
-              <span className="absolute top-[8%] left-[25%] font-[family-name:var(--font-playfair)] text-red-900 text-xl font-bold tracking-wide">
+          {/* ========================================== */}
+          {/* FOLDER 1: WORKS (PINK / BACK LEFT)         */}
+          {/* TWEAK POSITION HERE: top-[Xpx] left-[X%]   */}
+          {/* ========================================== */}
+          <a href="/works" className="absolute top-[-30px] left-[0%] z-10 block">
+            <motion.div whileHover={{ y: -40 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="relative">
+              {/* TWEAK SIZE HERE: w-[550px] */}
+              <img src="/folder-works.png" alt="Works Folder" className="w-[1500px] drop-shadow-xl" />
+              
+              {/* TWEAK TEXT ALIGNMENT HERE: top-[15%] left-[30%] */}
+              <span className="absolute top-[23%] left-[70%] font-[family-name:var(--font-playfair)] text-red-900 text-[1.4rem] font-bold tracking-wide pointer-events-none">
                 works
               </span>
             </motion.div>
           </a>
 
-          {/* 2. Contact Folder (Back Right) */}
-          <a href="/contact" className="absolute top-[20px] right-[8%] z-20 block">
-            <motion.div 
-              whileHover={{ y: -40 }} 
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative"
-            >
-              <img src="/folder-contact.png" alt="Contact Folder" className="w-[450px] drop-shadow-xl" />
-              <span className="absolute top-[8%] right-[30%] font-[family-name:var(--font-playfair)] text-red-900 text-xl font-bold tracking-wide">
+          {/* ========================================== */}
+          {/* FOLDER 2: CONTACT (YELLOW / BACK RIGHT)    */}
+          {/* TWEAK POSITION HERE: top-[Xpx] right-[X%]  */}
+          {/* ========================================== */}
+          <a href="/contact" className="absolute top-[0px] right-[0%] z-20 block">
+            <motion.div whileHover={{ y: -40 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="relative">
+              {/* TWEAK SIZE HERE: w-[550px] */}
+              <img src="/folder-contact.png" alt="Contact Folder" className="w-[1500px] drop-shadow-xl" />
+              
+              {/* TWEAK TEXT ALIGNMENT HERE: top-[15%] right-[35%] */}
+              <span className="absolute top-[23%] right-[68%] font-[family-name:var(--font-playfair)] text-red-900 text-[1.4rem] font-bold tracking-wide pointer-events-none">
                 contact
               </span>
             </motion.div>
           </a>
 
-          {/* 3. About Folder (Front Center) */}
-          <a href="/about" className="absolute top-[90px] left-1/2 -translate-x-1/2 z-30 block">
-            {/* Removed the hover lift from the front folder as requested */}
+          {/* ========================================== */}
+          {/* FOLDER 3: ABOUT (BLUE / FRONT CENTER)      */}
+          {/* TWEAK POSITION HERE: top-[Xpx]             */}
+          {/* ========================================== */}
+          <a href="/about" className="absolute top-[200px] left-1/2 -translate-x-1/2 z-30 block">
             <motion.div className="relative">
-              <img src="/folder-about.png" alt="About Folder" className="w-[750px] drop-shadow-2xl" />
-              <span className="absolute top-[8%] left-[20%] font-[family-name:var(--font-playfair)] text-amber-100 text-xl font-bold tracking-wide">
+              {/* TWEAK SIZE HERE: w-[850px] */}
+              <img src="/folder-about.png" alt="About Folder" className="w-[1500px] drop-shadow-2xl" />
+              
+              {/* TWEAK TEXT ALIGNMENT HERE: top-[12%] left-[25%] */}
+              <span className="absolute top-[80%] left-[25%] font-[family-name:var(--font-playfair)] text-amber-100/80 text-[1.4rem] font-bold tracking-wide pointer-events-none">
                 about
               </span>
             </motion.div>
@@ -171,14 +182,13 @@ export default function Home() {
 
           {/* BOUNCING "CLICK A FOLDER" TEXT */}
           <motion.div 
-            className="absolute -top-16 -right-8 z-40 w-64 h-48 pointer-events-none"
+            className="absolute -top-4 -right-20 z-40 w-72 h-48 pointer-events-none"
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            {/* Widened the viewBox and path so the text is no longer cut off */}
             <svg viewBox="0 0 250 200" className="w-full h-full drop-shadow-md overflow-visible">
               <path id="clickCurve" d="M 10,150 Q 120,50 240,150" fill="transparent" />
-              <text className="text-[1.5rem] font-[family-name:var(--font-caprasimo)] fill-red-900 tracking-widest">
+              <text className="text-[1.6rem] font-[family-name:var(--font-caprasimo)] fill-red-900 tracking-widest">
                 <textPath href="#clickCurve" startOffset="5%">
                   click a folder!
                 </textPath>
@@ -230,16 +240,16 @@ export default function Home() {
       </footer>
 
       {/* --- SPINNING VINYL RECORD --- */}
-      <div className="absolute -bottom-[350px] -left-[350px] z-40 pointer-events-none">
+      <div className="absolute top-[75vh] -left-[200px] z-40 pointer-events-none">
 
       {/* The ref is ONLY on this wrapper container now! */}
-        <div ref={vinylRef} className="relative w-[800px] h-[800px] flex items-center justify-center">
+        <div ref={vinylRef} className="relative w-[550px] h-[550px] flex items-center justify-center">
 
       {/* The image no longer has a ref */}
           <img 
             src="/vinyl.png" 
             alt="Spinning Vinyl" 
-            className="w-[500px] h-[500px] object-cover rounded-full drop-shadow-2xl"
+            className="w-[450px] h-[450px] object-cover rounded-full drop-shadow-2xl"
           />
         
        {/* The Curved SVG Text */}
@@ -249,10 +259,10 @@ export default function Home() {
               d="M 20,100 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" 
               fill="transparent" 
             />
-            <text className="text-[7px] font-[family-name:var(--font-playfair)] tracking-[0.25em] fill-slate-600 uppercase italic">
+            <text className="text-[20px] font-[family-name:var(--font-playfair)] tracking-[0.10em] fill-slate-600 lowercase italic">
               {/* Changed startOffset to 26% so it appears on the top right edge immediately */}
               <textPath href="#textCurve" startOffset="22%">
-                scroll down
+                scroll down 
               </textPath>
             </text>
           </svg>
