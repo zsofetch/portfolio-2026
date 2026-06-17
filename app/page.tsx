@@ -51,7 +51,7 @@ const deckCards = [
     id: 1,
     src: "/about-card.png",
     href: "/about",
-    finalX: -420,
+    finalX: -400,
     finalRotate: -10,
     initRotate: -3,
   },
@@ -59,7 +59,7 @@ const deckCards = [
     id: 2,
     src: "/works-card.png",
     href: "/works",
-    finalX: -140, 
+    finalX: -130, 
     finalRotate: -4,
     initRotate: -1,
   },
@@ -67,7 +67,7 @@ const deckCards = [
     id: 3,
     src: "/contact-card.png",
     href: "/contact",
-    finalX: 140, 
+    finalX: 130, 
     finalRotate: 4,
     initRotate: 1,
   },
@@ -75,7 +75,7 @@ const deckCards = [
     id: 4,
     src: "/shop-card.png",
     href: "/shop",
-    finalX: 420, 
+    finalX: 400, 
     finalRotate: 10,
     initRotate: 3,
   }
@@ -84,36 +84,36 @@ const deckCards = [
 // ------------------------------------
 // 3. PLAYING CARD COMPONENT
 // ------------------------------------
-interface CardProps {
-  card: (typeof deckCards)[0];
-  // We pass the raw MotionValue directly now!
-  progress: MotionValue<number>;
-}
+// interface CardProps {
+//   card: (typeof deckCards)[0];
+//   // We pass the raw MotionValue directly now!
+//   progress: MotionValue<number>;
+// }
 
-function PlayingCard({ card, progress }: CardProps) {
-  // Let Framer Motion handle the math natively to prevent invisible NaN transforms
-  const x = useTransform(progress, [0, 1], [0, card.finalX]);
-  const rotate = useTransform(progress, [0, 1], [card.initRotate, card.finalRotate]);
-
+function PlayingCard({ card }: { card: typeof deckCards[0] }) {
   return (
     <motion.a
       href={card.href}
       className="absolute block"
-      style={{
-        x,
-        rotate,
-        zIndex: card.id,
-        transformOrigin: "bottom center",
-      }}
+      style={{ zIndex: card.id, transformOrigin: "bottom center" }}
+      
+      // 1. Initial state: Stacked in the center, slightly pushed down
+      initial={{ x: 0, y: 50, rotate: card.initRotate, opacity: 0 }}
+      
+      // 2. Animate to: Fanned out to final positions when they enter the screen
+      whileInView={{ x: card.finalX, y: 0, rotate: card.finalRotate, opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      
+      // 3. Hover state: Lift up
       whileHover={{ y: -24, scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      
+      transition={{ type: "spring", stiffness: 100, damping: 15 }}
     >
       <img
         src={card.src}
         alt={`Navigation Card ${card.id}`}
-        // ADDED: min-h-[380px] and a subtle background. 
-        // If the cards show up as grey rectangles, it means your code is perfect but the image filename is wrong!
-        className="w-[280px] min-h-[380px] bg-zinc-200/50 h-auto drop-shadow-2xl cursor-pointer select-none rounded-xl hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.2)] transition-all"
+        // Fallback grey background added: If the images are broken, you will at least see a grey rectangle!
+        className="w-[260px] min-h-[360px] bg-zinc-200/50 h-auto drop-shadow-2xl cursor-pointer select-none rounded-xl hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.2)] transition-all"
       />
     </motion.a>
   );
@@ -122,7 +122,7 @@ function PlayingCard({ card, progress }: CardProps) {
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const vinylRef = useRef<HTMLImageElement>(null);
-  const deckSectionRef = useRef<HTMLDivElement>(null);
+  // const deckSectionRef = useRef<HTMLDivElement>(null);
 
   // 2. GSAP ScrollTrigger for the vinyl Record
   useGSAP(() => {
@@ -138,16 +138,14 @@ export default function Home() {
     });
   }, { scope: containerRef });
 
-  // FRAMER: Card Spread Progress Tracker
-  const { scrollYProgress } = useScroll({
-    target: deckSectionRef,
-    offset: ["start end", "center center"],
-  });
+  // // FRAMER: Card Spread Progress Tracker
+  // const { scrollYProgress } = useScroll({
+  //   target: deckSectionRef,
+  //   offset: ["start end", "center center"],
+  // });
   
-  // Maps the scroll bounds to a clean 0 to 1 decimal
-  const spreadProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  // NO MORE useState HERE!
+  // // Maps the scroll bounds to a clean 0 to 1 decimal
+  // const spreadProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   // // Modern Framer hook to update React state from scroll value
   // useMotionValueEvent(spreadProgress, "change", (latest) => {
@@ -159,7 +157,7 @@ export default function Home() {
       
       {/* --- HEADER NAVIGATION --- */}
       {/* mt-2 */}
-      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-12 py-3 z-50 pointer-events-auto">
+      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-12 py-0 z-50 pointer-events-auto">
         <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain"/>
         <nav className="flex gap-12 text-slate-500 text-base font-[family-name:var(--font-playfair)] tracking-wide">
           <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-0.5">home</a>
@@ -196,12 +194,12 @@ export default function Home() {
       {/*to modify*/}
     
       {/* --- SPINNING VINYL RECORD --- */}
-      <div className="absolute top-[75vh] -left-[200px] z-40 pointer-events-none">
+      <div className="absolute top-[55vh] -left-[200px] z-40 pointer-events-none">
         <div ref={vinylRef} className="relative w-[550px] h-[550px] flex items-center justify-center">
           <img src="/vinyl.png" alt="Spinning Vinyl" className="absolute w-[450px] h-[450px] object-cover rounded-full drop-shadow-2xl" />
           <svg viewBox="0 0 250 250" className="absolute w-full h-full drop-shadow-sm">
             <path id="textCurve" d="M 15,125 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" fill="transparent" />
-            <text className="text-[7px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 uppercase italic">
+            <text className="text-[20px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 lowercase italic">
               <textPath href="#textCurve" startOffset="25%">scroll down</textPath>
             </text>
           </svg>
@@ -210,30 +208,40 @@ export default function Home() {
 
       {/* --- SCROLL-TRIGGERED CARD DECK SECTION --- */}
       {/* 220vh gives you the scroll runway to watch them spread slowly */}
-      <section ref={deckSectionRef} className="relative w-full z-30" style={{ height: "220vh" }}>
-        {/* Sticky container pins the cards to the screen while you scroll through the 220vh runway */}
-        <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative w-full z-30 flex flex-col items-center pt-20 pb-16">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-6xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10"
+        >
+          what&apos;s in the cards for us?
+        </motion.h2>
+
+        {/* The Cards Wrapper */}
+        <div className="relative flex items-center justify-center w-full max-w-6xl" style={{ height: 450 }}>
           
+          {deckCards.map((card) => (
+            <PlayingCard key={card.id} card={card} />
+          ))}
+
+          {/* "Pick a card" label from wireframe (Bottom Left) */}
           <motion.p
-            initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-            className="absolute bottom-28 left-20 font-[family-name:var(--font-caprasimo)] text-red-900 text-2xl leading-tight pointer-events-none"
+            initial={{ opacity: 0, x: -20 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="absolute bottom-0 left-10 font-[family-name:var(--font-caprasimo)] text-red-900 text-2xl leading-tight pointer-events-none"
             style={{ transform: "rotate(-8deg)" }}
           >
             pick a card,<br />any card!
           </motion.p>
-
-          <div className="relative flex items-center justify-center" style={{ height: 350 }}>
-            {deckCards.map((card) => (
-              <PlayingCard key={card.id} card={card} progress={spreadProgress} />
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* --- SOCIAL CONNECTIONS (Large Icons retained) --- */}
-      <section className="relative w-full flex flex-col items-center pb-20 z-30">
-        <div className="flex flex-col items-center mt-2 font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-2xl mb-4 italic tracking-wide">let&apos;s connect!</p>
+      {/* social connections icons */}
+      <section className="relative w-full flex flex-col items-center pb-16 z-30">
+        <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
+          <p className="text-1xl mb-4 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
             {/* array mapping for bouncing icons */}
             {[
@@ -255,7 +263,7 @@ export default function Home() {
       </section>
 
       {/* --- FOOTER --- */}
-      <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50 mt-10">
+      <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50">
         <span className="italic">layout inspired by @ciaragan</span>
         <a href="mailto:antolijaozsofia@gmail.com" className="hover:text-zinc-300 transition-colors underline underline-offset-4 decoration-1">
           antolijaozsofia@gmail.com
