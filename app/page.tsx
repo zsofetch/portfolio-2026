@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -45,84 +45,86 @@ const scrapbookItems = [
 ];
 
 
-//card deck 
+//-- card deck 
 const deckCards = [
   {
     id: 1,
     src: "/about-card.png",
     href: "/about",
     finalX: -400,
-    finalRotate: -10,
-    initRotate: -3,
+    initX: 400,
+    finalRotate: -12,
+    initRotate: 15,
   },
   {
     id: 2,
     src: "/works-card.png",
     href: "/works",
     finalX: -130, 
+    initX: 400,
     finalRotate: -4,
-    initRotate: -1,
+    initRotate: 8,
   },
   {
     id: 3,
     src: "/contact-card.png",
     href: "/contact",
     finalX: 130, 
+    initX: 400,
     finalRotate: 4,
-    initRotate: 1,
+    initRotate: -2,
   },
   {
     id: 4,
     src: "/shop-card.png",
     href: "/shop",
     finalX: 400, 
-    finalRotate: 10,
-    initRotate: 3,
+    initX: 400,
+    finalRotate: 12,
+    initRotate: -10,
   }
 ];
 
-// ------------------------------------
-// 3. PLAYING CARD COMPONENT
-// ------------------------------------
-// interface CardProps {
-//   card: (typeof deckCards)[0];
-//   // We pass the raw MotionValue directly now!
-//   progress: MotionValue<number>;
-// }
+//-- playing card 
+interface CardProps {
+  card: (typeof deckCards)[0];
+  // pass the raw MotionValue directly now
+  progress: MotionValue<number>;
+}
 
-function PlayingCard({ card }: { card: typeof deckCards[0] }) {
+function PlayingCard({ card, progress }: CardProps) {
+  const [hovered, setHovered] = useState(false);
+
+  //link X and rotate to the scroll progress natively
+  const x = useTransform(progress, [0, 1], [card.initX, card.finalX]);
+  const rotate = useTransform(progress, [0, 1], [card.initRotate, card.finalRotate]);
+
   return (
     <motion.a
       href={card.href}
       className="absolute block"
-      style={{ zIndex: card.id, transformOrigin: "bottom center" }}
-      
-      // 1. Initial state: Stacked in the center, slightly pushed down
-      initial={{ x: 0, y: 50, rotate: card.initRotate, opacity: 0 }}
-      
-      // 2. Animate to: Fanned out to final positions when they enter the screen
-      whileInView={{ x: card.finalX, y: 0, rotate: card.finalRotate, opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      
-      // 3. Hover state: Lift up
-      whileHover={{ y: -24, scale: 1.05 }}
-      
-      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+      style={{
+        x, rotate, zIndex: card.id, transformOrigin: "bottom center",
+      }}
+      animate={{ y: hovered ? -24 : 0, scale: hovered ? 1.05 : 1 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <img
         src={card.src}
         alt={`Navigation Card ${card.id}`}
-        // Fallback grey background added: If the images are broken, you will at least see a grey rectangle!
-        className="w-[260px] min-h-[360px] bg-zinc-200/50 h-auto drop-shadow-2xl cursor-pointer select-none rounded-xl hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.2)] transition-all"
+        className="w-[360px] min-h-[360px] h-auto drop-shadow-2xl cursor-pointer select-none rounded-xl hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.2)] transition-all"
       />
     </motion.a>
   );
 }
 
+//--main page
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const vinylRef = useRef<HTMLImageElement>(null);
-  // const deckSectionRef = useRef<HTMLDivElement>(null);
+  const cardsSectionRef = useRef<HTMLDivElement>(null);
 
   // 2. GSAP ScrollTrigger for the vinyl Record
   useGSAP(() => {
@@ -138,26 +140,20 @@ export default function Home() {
     });
   }, { scope: containerRef });
 
-  // // FRAMER: Card Spread Progress Tracker
-  // const { scrollYProgress } = useScroll({
-  //   target: deckSectionRef,
-  //   offset: ["start end", "center center"],
-  // });
-  
-  // // Maps the scroll bounds to a clean 0 to 1 decimal
-  // const spreadProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  // FRAMER: Card Spread Scroll Tracker (Tied to the cards section, not a huge gap)
+  const { scrollYProgress } = useScroll({
+    target: cardsSectionRef,
+    // Starts spreading when section is 80% down the screen, finishes when centered
+    offset: ["start 80%", "center center"],
+  });
 
-  // // Modern Framer hook to update React state from scroll value
-  // useMotionValueEvent(spreadProgress, "change", (latest) => {
-  //   setProgress(latest);
-  // });
+  const titleText = "what's in the cards for us?";
 
   return (
     <div ref={containerRef} className="w-full relative overflow-hidden bg-[#FCFAF8]">
       
-      {/* --- HEADER NAVIGATION --- */}
-      {/* mt-2 */}
-      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-12 py-0 z-50 pointer-events-auto">
+      {/* --- HEADER --- */}
+      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-12 py-3 z-50 pointer-events-auto">
         <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain"/>
         <nav className="flex gap-12 text-slate-500 text-base font-[family-name:var(--font-playfair)] tracking-wide">
           <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-0.5">home</a>
@@ -199,7 +195,7 @@ export default function Home() {
           <img src="/vinyl.png" alt="Spinning Vinyl" className="absolute w-[450px] h-[450px] object-cover rounded-full drop-shadow-2xl" />
           <svg viewBox="0 0 250 250" className="absolute w-full h-full drop-shadow-sm">
             <path id="textCurve" d="M 15,125 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" fill="transparent" />
-            <text className="text-[20px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 lowercase italic">
+            <text className="text-[7px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 uppercase italic">
               <textPath href="#textCurve" startOffset="25%">scroll down</textPath>
             </text>
           </svg>
@@ -208,29 +204,36 @@ export default function Home() {
 
       {/* --- SCROLL-TRIGGERED CARD DECK SECTION --- */}
       {/* 220vh gives you the scroll runway to watch them spread slowly */}
-      <section className="relative w-full z-30 flex flex-col items-center pt-20 pb-16">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-6xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10"
-        >
-          what&apos;s in the cards for us?
-        </motion.h2>
+      <section ref={cardsSectionRef} className="relative w-full z-30 flex flex-col items-center pt-24 pb-16 min-h-screen">
+        
+        {/* The Wavy Title */}
+        <h2 className="text-5xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 flex">
+          {titleText.split("").map((char, index) => (
+            <motion.span
+              key={index}
+              // Alternates between bouncing up first vs bouncing down first based on odd/even index
+              animate={{ y: index % 2 === 0 ? [-3, 3, -3] : [3, -3, 3] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.05 }}
+              style={{ display: "inline-block", whiteSpace: "pre" }} // whiteSpace: pre preserves spaces!
+            >
+              {char}
+            </motion.span>
+          ))}
+        </h2>
 
         {/* The Cards Wrapper */}
         <div className="relative flex items-center justify-center w-full max-w-6xl" style={{ height: 450 }}>
           
           {deckCards.map((card) => (
-            <PlayingCard key={card.id} card={card} />
+            <PlayingCard key={card.id} card={card} progress={scrollYProgress} />
           ))}
 
-          {/* "Pick a card" label from wireframe (Bottom Left) */}
+          {/* "Pick a card" label */}
           <motion.p
             initial={{ opacity: 0, x: -20 }} 
             whileInView={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="absolute bottom-0 left-10 font-[family-name:var(--font-caprasimo)] text-red-900 text-2xl leading-tight pointer-events-none"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="absolute bottom-0 left-10 font-[family-name:var(--font-caprasimo)] text-slate-800 text-2xl leading-tight pointer-events-none"
             style={{ transform: "rotate(-8deg)" }}
           >
             pick a card,<br />any card!
@@ -241,7 +244,7 @@ export default function Home() {
       {/* social connections icons */}
       <section className="relative w-full flex flex-col items-center pb-16 z-30">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-1xl mb-4 italic tracking-wide">let&apos;s connect!</p>
+          <p className="text-2xl mb-4 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
             {/* array mapping for bouncing icons */}
             {[
