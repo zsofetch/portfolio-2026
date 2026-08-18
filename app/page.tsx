@@ -153,9 +153,9 @@ export default function Home() {
     <div ref={containerRef} className="w-full relative overflow-hidden bg-[#FCFAF8]">
       
       {/* --- HEADER --- */}
-      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-12 py-3 z-50 pointer-events-auto">
+      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-10 py-0 z-50 pointer-events-auto">
         <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain"/>
-        <nav className="flex gap-12 text-slate-500 text-base font-[family-name:var(--font-playfair)] tracking-wide">
+        <nav className="flex gap-10 text-slate-500 text-base font-[family-name:var(--font-playfair)] tracking-wide">
           <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-0.5">home</a>
           <a href="#" className="hover:text-slate-800 transition-colors pb-0.5">about</a>
           <a href="#" className="hover:text-slate-800 transition-colors pb-0.5">works</a>
@@ -207,7 +207,7 @@ export default function Home() {
       <section ref={cardsSectionRef} className="relative w-full z-30 flex flex-col items-center pt-24 pb-16 min-h-screen">
         
         {/* The Wavy Title */}
-        <h2 className="text-5xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 flex">
+        <h2 className="text-7xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 flex">
           {titleText.split("").map((char, index) => (
             <motion.span
               key={index}
@@ -228,13 +228,13 @@ export default function Home() {
             <PlayingCard key={card.id} card={card} progress={scrollYProgress} />
           ))}
 
-          {/* "Pick a card" label */}
+          {/* "Pick a card" label - to be fixed */}
           <motion.p
             initial={{ opacity: 0, x: -20 }} 
             whileInView={{ opacity: 1, x: 0 }} 
             transition={{ duration: 0.6, delay: 0.2 }}
             className="absolute bottom-0 left-10 font-[family-name:var(--font-caprasimo)] text-slate-800 text-2xl leading-tight pointer-events-none"
-            style={{ transform: "rotate(-8deg)" }}
+            style={{ transform: "rotate(-5deg)" }}
           >
             pick a card,<br />any card!
           </motion.p>
