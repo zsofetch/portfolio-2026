@@ -151,18 +151,21 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="w-full relative overflow-hidden bg-[#FCFAF8]">
-      
+
       {/* --- HEADER --- */}
-      <header className="fixed top-0 left-0 w-full flex justify-between items-center px-10 py-0 z-50 pointer-events-auto">
-        <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain"/>
-        <nav className="flex gap-10 text-slate-500 text-base font-[family-name:var(--font-playfair)] tracking-wide">
-          <a href="#" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-0.5">home</a>
-          <a href="#" className="hover:text-slate-800 transition-colors pb-0.5">about</a>
-          <a href="#" className="hover:text-slate-800 transition-colors pb-0.5">works</a>
-          <a href="#" className="hover:text-slate-800 transition-colors pb-0.5">shop</a>
-          <a href="#" className="hover:text-slate-800 transition-colors pb-0.5">contact</a>
+      <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-4 z-50 pointer-events-auto bg-transparent">
+         <a href="/">
+          <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain cursor-pointer"/>
+        </a>
+        <nav className="flex gap-12 text-slate-500 text-xl font-[family-name:var(--font-playfair)] tracking-wide mt-2">
+          <a href="/" className="font-bold text-slate-900 border-b-2 border-slate-900 pb-0.5">home</a>
+          <a href="/about" className="hover:text-slate-800 transition-colors pb-0.5">about</a>
+          <a href="/works" className="hover:text-slate-800 transition-colors pb-0.5">works</a>
+          <a href="/shop" className="hover:text-slate-800 transition-colors pb-0.5">shop</a>
+          <a href="/contact" className="hover:text-slate-800 transition-colors pb-0.5">contact</a>
         </nav>
       </header>
+
 
       {/* --- HERO COLLAGE SECTION --- */}
       <section className="relative w-full h-screen flex items-center justify-center">
@@ -195,7 +198,7 @@ export default function Home() {
           <img src="/vinyl.png" alt="Spinning Vinyl" className="absolute w-[450px] h-[450px] object-cover rounded-full drop-shadow-2xl" />
           <svg viewBox="0 0 250 250" className="absolute w-full h-full drop-shadow-sm">
             <path id="textCurve" d="M 15,125 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" fill="transparent" />
-            <text className="text-[7px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 uppercase italic">
+            <text className="text-[8px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 uppercase italic">
               <textPath href="#textCurve" startOffset="25%">scroll down</textPath>
             </text>
           </svg>
@@ -207,7 +210,7 @@ export default function Home() {
       <section ref={cardsSectionRef} className="relative w-full z-30 flex flex-col items-center pt-24 pb-16 min-h-screen">
         
         {/* The Wavy Title */}
-        <h2 className="text-7xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 flex">
+        <h2 className="text-6xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 flex">
           {titleText.split("").map((char, index) => (
             <motion.span
               key={index}
@@ -222,19 +225,18 @@ export default function Home() {
         </h2>
 
         {/* The Cards Wrapper */}
-        <div className="relative flex items-center justify-center w-full max-w-6xl" style={{ height: 450 }}>
+        <div className="relative flex items-center justify-center w-full max-w-6xl" style={{ height: 480 }}>
           
           {deckCards.map((card) => (
             <PlayingCard key={card.id} card={card} progress={scrollYProgress} />
           ))}
 
-          {/* "Pick a card" label - to be fixed */}
+          {/* "Pick a card" label - FIXED*/}
           <motion.p
-            initial={{ opacity: 0, x: -20 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="absolute bottom-0 left-10 font-[family-name:var(--font-caprasimo)] text-slate-800 text-2xl leading-tight pointer-events-none"
-            style={{ transform: "rotate(-5deg)" }}
+            initial={{ opacity: 0, y: 70 }} 
+            whileInView={{ opacity: 1, x:-70, y: 70 }} 
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="absolute -bottom-2 left-4 left-[calc(50%-540px)] z-40 font-[family-name:var(--font-caprasimo)] text-slate-800 text-2xl leading-tight pointer-events-none"
           >
             pick a card,<br />any card!
           </motion.p>
@@ -242,11 +244,11 @@ export default function Home() {
       </section>
 
       {/* social connections icons */}
-      <section className="relative w-full flex flex-col items-center pb-16 z-30">
+      {/* Reduced pb-16 to pb-8 to drag the footer up! */}
+      <section className="relative w-full flex flex-col items-center pb-2 z-30 mt-2">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-2xl mb-4 italic tracking-wide">let&apos;s connect!</p>
+          <p className="text-xl mb-4 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
-            {/* array mapping for bouncing icons */}
             {[
               { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
               { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "#" },
@@ -258,7 +260,7 @@ export default function Home() {
                 animate={{ y: [0, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
                 whileHover={{ scale: 1.1 }}
               >
-                <img src={social.src} alt={social.alt} className="w-[70px] h-[70px] object-contain hover:drop-shadow-md transition-all" />
+                <img src={social.src} alt={social.alt} className="w-[60px] h-[60px] object-contain hover:drop-shadow-md transition-all" />
               </motion.a>
             ))}
           </div>
