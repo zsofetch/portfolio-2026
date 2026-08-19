@@ -98,34 +98,35 @@ export default function Works() {
       </header>
 
       {/* --- EXHIBITS SECTION --- */}
-      <section className="relative w-full max-w-[1400px] mx-auto px-12 pt-32 pb-16 z-10 flex flex-col items-center">
-        
-        {/* Title */}
-        <div className="w-full flex justify-start md:justify-center md:-ml-[25%] mb-8">
-          <h1 className="text-6xl md:text-7xl font-bold font-[family-name:var(--font-playfair)] text-[#2B3A4A] tracking-tighter">
-            Exhibits.
-          </h1>
-        </div>
+      <section className="relative w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-32 pb-16 z-10 flex flex-col items-center">
         
         {/* Exhibits Gallery - Museum Wall Layout */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          // Forces all 4 items into a single horizontal row on desktop
-          className="flex flex-col md:flex-row items-start justify-between w-full gap-6"
+          transition={{ duration: 0.4 }}
+          // flex-row ensures they NEVER stack into a single column!
+          className="flex flex-row items-start justify-center w-full gap-4 md:gap-8"
         >
           {exhibitsData.map((exhibit, index) => (
             <div 
               key={exhibit.id}
-              // Odd indexed items (2nd and 4th) are pushed down 6rem to match your mock UI exactly
-              className={`flex justify-center w-full md:w-1/4 ${index % 2 !== 0 ? "md:mt-24" : ""}`}
+              // w-1/4 keeps them exactly 25% width each. 
+              // mt-16/mt-28 pushes the 2nd and 4th frames down for the zigzag museum look.
+              className={`relative flex flex-col items-center w-1/4 ${index % 2 !== 0 ? "mt-16 md:mt-28" : ""}`}
             >
+              {/* Title is absolutely positioned right above the 2nd frame */}
+              {index === 1 && (
+                <h1 className="absolute bottom-full mb-4 md:mb-8 text-6xl sm:text-5xl md:text-[5rem] leading-none font-bold font-[family-name:var(--font-playfair)] text-[#2B3A4A] tracking-tighter w-full text-center">
+                  Exhibits.
+                </h1>
+              )}
+
               <img 
                 src={exhibit.image} 
                 alt={exhibit.alt} 
-                className="w-full max-w-[320px] h-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer drop-shadow-xl"
+                className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer drop-shadow-2xl"
               />
             </div>
           ))}
