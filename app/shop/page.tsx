@@ -38,7 +38,7 @@ export default function Shop() {
             {/* Left Inner Column: Tall Image + Wide Image */}
             <div className="col-span-3 flex flex-col gap-4 h-full">
               <img 
-                src="/shop-placeholder-1.png" 
+                src="/shop-third.png" 
                 alt="Tumble Dry Showcase" 
                 className="w-full h-[65%] object-cover rounded-[2.5rem] shadow-sm hover:scale-[1.02] transition-transform duration-500 cursor-pointer" 
               />
@@ -52,18 +52,18 @@ export default function Shop() {
             {/* Right Inner Column: 3 Stacked Images (Last one is a circle!) */}
             <div className="col-span-2 flex flex-col gap-4 h-full">
               <img 
-                src="/shop-placeholder-3.png" 
+                src="/shop-second.png" 
                 alt="Tumble Dry Item" 
                 className="w-full h-[33.3%] object-cover rounded-[2rem] shadow-sm hover:scale-[1.02] transition-transform duration-500 cursor-pointer" 
               />
               <img 
-                src="/shop-placeholder-4.png" 
+                src="/shop-first.png" 
                 alt="Tumble Dry Item" 
                 className="w-full h-[33.3%] object-cover rounded-[2rem] shadow-sm hover:scale-[1.02] transition-transform duration-500 cursor-pointer" 
               />
               {/* rounded-full makes this a perfect circle assuming the aspect ratio is close to square */}
               <img 
-                src="/shop-placeholder-5.png" 
+                src="/works-tumbledry.png" 
                 alt="Tumble Dry Badge" 
                 className="w-full h-[33.3%] object-cover rounded-full shadow-sm hover:scale-[1.02] transition-transform duration-500 cursor-pointer" 
               />
@@ -94,14 +94,6 @@ export default function Shop() {
               Right now, I sell curated drops, upcycled garments, and more directly on my shop.
             </p>
             
-            {/* The handwritten asset added to the bottom of the text block */}
-            <div className="w-full flex justify-end lg:justify-center pr-8 lg:pr-0 mt-4">
-              <img 
-                src="/likewhatyousee.png" 
-                alt="Like what you see?" 
-                className="w-48 opacity-80 rotate-[-8deg] pointer-events-none" 
-              />
-            </div>
           </motion.div>
 
           {/* 3. RIGHT IMAGE (Spans 4 of 12 columns) */}
@@ -120,6 +112,29 @@ export default function Shop() {
 
         </div>
       </main>
+      {/* --- SOCIAL CONNECTIONS --- */}
+      {/* Swapped mt-auto for mt-4 to prevent it from forcing itself to the bottom of the screen */}
+      <section className="relative w-full flex flex-col items-center pb-8 z-30">
+        <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
+          <p className="text-xl mb-4 italic tracking-wide">let&apos;s connect!</p>
+          <div className="flex gap-6">
+            {[
+              { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
+              { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "#" },
+              { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "#" },
+              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" }
+            ].map((social, index) => (
+              <motion.a 
+                key={social.id} href={social.link} className="block"
+                animate={{ y: [0, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
+                whileHover={{ scale: 1.1 }}
+              >
+                <img src={social.src} alt={social.alt} className="w-[60px] h-[60px] object-contain hover:drop-shadow-md transition-all" />
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* --- FOOTER --- */}
       <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50 mt-auto">
