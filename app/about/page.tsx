@@ -22,7 +22,7 @@ export default function About() {
 
       {/* --- BIO & PASSPORT SECTION --- */}
       {/* Removed max-w-6xl. Added pl-12 for left alignment, but pr-0 to let the right side bleed to the edge */}
-      <section className="relative w-full pl-12 pr-0 pt-10 pb-20 flex flex-col md:flex-row items-center justify-between">
+      <section className="relative w-full pl-12 pr-0 pb-20 flex flex-col md:flex-row items-center justify-between">
         
         {/* Left Column: Text */}
         <div className="w-full md:w-1/2 max-w-2xl flex flex-col gap-2 z-10">
@@ -74,7 +74,7 @@ export default function About() {
 
 {/* --- TECH STACK SECTION --- */}
       {/* Changed pb-32 to pb-8 to pull the social icons way up */}
-      <section className="w-full flex flex-col items-center pb-8 pt-10 z-10">
+      <section className="w-full flex flex-col items-center pb-8 z-10">
         <h2 className="text-6xl font-bold text-[#3B1D1D] tracking-tight mb-2">
           Tech Stack.
         </h2>
@@ -92,7 +92,7 @@ export default function About() {
 
       {/* --- SOCIAL CONNECTIONS --- */}
       {/* Swapped mt-auto for mt-4 to prevent it from forcing itself to the bottom of the screen */}
-      <section className="relative w-full flex flex-col items-center pb-8 z-30 mt-4">
+      <section className="relative w-full flex flex-col items-center pb-8 z-30">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
           <p className="text-xl mb-4 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
