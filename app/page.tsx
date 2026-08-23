@@ -1,5 +1,7 @@
 "use client";
-
+//edits: need to change the bouncing animation sa "whats in the cards for us" 
+//need to change "pick a card, any card!" to be fixed in place and not move with the cards
+//footer: need to change bouncing animations to breathing animations for the social icons and make "lets connect" in a prettier/personalized font
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import gsap from "gsap";
