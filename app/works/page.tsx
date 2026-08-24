@@ -195,17 +195,26 @@ export default function Works() {
         </div>
       </section>
 
-      {/* social connections icons */}
-      <section className="relative w-full flex flex-col items-center pb-2 z-30 mt-1">
+      {/* --- social connections icons --- */}
+      <section className="relative w-full flex flex-col items-center pb-2 z-30">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-sm mb-2 italic tracking-wide">let&apos;s connect!</p>
-          <div className="flex gap-6">
+          <p className="text-sm mb-2 italic tracking-wide"> let&apos;s connect! </p>
+          <div className="relative flex gap-6">
+           
+           {/* like what u see bs */}
+            <img
+              src="/likewhatyousee.png"
+              alt="Like what you see?"
+              className="absolute -left-43 md:-left-48 -top-10 md:-top-20 w-32 md:w-48 h-auto pointer-events-none"
+            />
+            
             {[
               { id: 1, src: "/icon-github.png", alt: "GitHub", link: "https://github.com/zsofetch" },
               { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "https://www.facebook.com/share/1Pc8qRrGwc/" },
               { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "https://www.linkedin.com/in/zsofy" }, 
               { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "https://www.instagram.com/zsofetch?igsi=MWJiZDZvdHA3a2xmbQ==" }
             ].map((social, index) => (
+             
               <motion.a 
                 key={social.id} 
                 href={social.link} 
@@ -226,7 +235,7 @@ export default function Works() {
         </div>
       </section>
 
-      {/* --- footer --- */}
+      {/* --- FOOTER --- */}
       <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50">
         <span className="italic">layout inspired by @ciaragan</span>
         <a href="mailto:antolijaozsofia@gmail.com" className="hover:text-zinc-300 transition-colors underline underline-offset-4 decoration-1">
