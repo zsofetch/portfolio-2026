@@ -239,10 +239,10 @@ export default function Home() {
           <p className="text-sm mb-2 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
             {[
-              { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
-              { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "#" },
-              { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "#" },
-              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" }
+              { id: 1, src: "/icon-github.png", alt: "GitHub", link: "https://github.com/zsofetch" },
+              { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "https://www.facebook.com/share/1Pc8qRrGwc/" },
+              { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "https://www.linkedin.com/in/zsofy" }, 
+              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "https://www.instagram.com/zsofetch?igsi=MWJiZDZvdHA3a2xmbQ==" }
             ].map((social, index) => (
               <motion.a 
                 key={social.id} 

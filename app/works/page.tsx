@@ -3,10 +3,6 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
-// ==========================================
-// 1. DYNAMIC DATA ARRAYS
-// ==========================================
-
 const exhibitsData = [
   {
     id: 1,
@@ -46,29 +42,26 @@ const exhibitsData = [
   },
 ];
 
-// Custom overlay colors retained!
+// works data - to be modified ang colors
 const worksData = [
-  { id: 1, image: "/works-tingog.png", title: "TINGOG Party Article", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(159, 18, 57, 0.85)" }, 
-  { id: 2, image: "/works-ssc.png", title: "SSC Campaign", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(30, 58, 138, 0.85)" },
-  { id: 3, image: "/works-wildlifeday.png", title: "Animal Wildlife Day Feature", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(22, 101, 52, 0.85)" },
-  { id: 4, image: "/works-swimming.png", title: "USC Days Campaign", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(15, 118, 110, 0.85)" },
-  { id: 5, image: "/works-kb.png", title: "Kulay Bahaghari Campaign", category: "Writing and Graphic Design", description: "Placeholder for now", link: "#", overlayColor: "rgba(134, 25, 143, 0.85)" },
-  { id: 6, image: "/works-women.png", title: "Women's Month Feature", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(159, 18, 57, 0.85)" },
-  { id: 7, image: "/works-tumbledry.png", title: "Tumble Dry Shop", category: "Business", description: "Placeholder for now", link: "#", overlayColor: "rgba(39, 39, 42, 0.85)" }, 
-  { id: 8, image: "/works-shutool.png", title: "Shutool App", category: "Development", description: "Placeholder for now", link: "#", overlayColor: "rgba(234, 179, 8, 0.85)" },
-  { id: 9, image: "/works-careiosk.png", title: "Careiosk", category: "Design", description: "Placeholder for now", link: "#", overlayColor: "rgba(16, 185, 129, 0.85)" },
-  { id: 10, image: "/works-cod.png", title: "COD Feature", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(185, 28, 28, 0.85)" },
-  { id: 11, image: "/works-craveh.png", title: "Craveh App", category: "Design", description: "Placeholder for now", link: "#", overlayColor: "rgba(249, 115, 22, 0.85)" }, 
-  { id: 12, image: "/works-basketball.png", title: "Sports Feature", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(234, 88, 12, 0.85)" },
-  { id: 13, image: "/works-foundit.png", title: "FoundIt Campaign", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(202, 138, 4, 0.85)" },
-  { id: 14, image: "/works-ssc2.png", title: "Hans", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(71, 85, 105, 0.85)" }, 
-  { id: 15, image: "/works-cisco.png", title: "Cisco", category: "Writing", description: "Placeholder for now", link: "#", overlayColor: "rgba(2, 132, 199, 0.85)" },
+  { id: 1, image: "/works-tingog.png", title: "TINGOG Party Article", category: "Writing", description: "", link: "https://www.facebook.com/share/p/1E2RhSDBqE/", overlayColor: "rgba(124, 19, 70, 0.70)" }, 
+  { id: 2, image: "/works-ssc.png", title: "SSC Campaign", category: "Writing", description: "", link: "https://www.facebook.com/share/p/1Cb38jppJT/", overlayColor: "rgba(30, 58, 138, 0.70)" },
+  { id: 3, image: "/works-wildlifeday.png", title: "Animal Wildlife Day Feature", category: "Writing", description: "", link: "https://www.facebook.com/share/p/1HnJQ8z16q/", overlayColor: "rgba(22, 101, 52, 0.70)" },
+  { id: 4, image: "/works-swimming.png", title: "USC Days Campaign", category: "Writing", description: "", link: "https://www.facebook.com/share/p/1EuUEvuWba/", overlayColor: "rgba(15, 118, 110, 0.70)" },
+  { id: 5, image: "/works-kb.png", title: "Kulay Bahaghari Campaign", category: "Writing and Graphic Design", description: "", link: "https://www.facebook.com/share/1UQVg5dDQs/", overlayColor: "rgba(134, 25, 143, 0.70)" },
+  { id: 6, image: "/works-women.png", title: "Women's Month Feature", category: "Writing", description: "", link: "https://www.facebook.com/share/p/1FDeGK6CBB/", overlayColor: "rgba(159, 18, 57, 0.70)" },
+  { id: 7, image: "/works-tumbledry.png", title: "Tumble Dry Shop", category: "Business", description: "", link: "https://www.instagram.com/tumbledry.ph?igsi=MXNjbzhxbnpxNTlyNw==", overlayColor: "rgba(39, 39, 42, 0.70)" }, 
+  { id: 8, image: "/works-shutool.png", title: "Shutool App", category: "Mobile Development", description: "https://github.com/zsofetch/Shutool.git", link: "#", overlayColor: "rgba(234, 179, 8, 0.70)" },
+  { id: 9, image: "/works-careiosk.png", title: "Careiosk", category: "Tri-Platform System", description: "Capstone Project", link: "https://github.com/hynnah/careiosk-prototype.git", overlayColor: "rgba(16, 185, 129, 0.70)" },
+  { id: 10, image: "/works-cod.png", title: "Cards of Clydd Flashcard Maker", category: "Web Development", description: "OOP Concepts", link: "https://github.com/BoysOnTheRadio/FlashcardsApp-REAL.git", overlayColor: "rgba(185, 28, 28, 0.70)" },
+  { id: 11, image: "/works-craveh.png", title: "Craveh App", category: "Web Development", description: "", link: "https://craveh.dcism.org", overlayColor: "rgba(249, 115, 22, 0.70)" }, 
+  { id: 12, image: "/works-basketball.png", title: "Sports Feature", category: "Basketball", description: "", link: "https://www.facebook.com/share/p/1KtF26w7x8/", overlayColor: "rgba(160, 27, 28, 0.70)" },
+  { id: 13, image: "/works-foundit.png", title: "FoundIt", category: "Web Development", description: "Lost and Found Platform for USC DCISM", link: "https://github.com/hynnah/foundit.git", overlayColor: "rgba(202, 138, 4, 0.70)" },
+  { id: 14, image: "/works-ssc2.png", title: "SSC Article", category: "Writing", description: "", link: "https://www.facebook.com/share/p/19BXRFxgzi/", overlayColor: "rgba(71, 85, 105, 0.70)" }, 
+  { id: 15, image: "/works-cisco.png", title: "Cisco PR", category: "Graphic Design", description: "", link: "#", overlayColor: "rgba(2, 132, 199, 0.70)" },
 ];
 
-// ==========================================
-// 2. MAIN PAGE COMPONENT
-// ==========================================
-
+// -- main page
 export default function Works() {
   const gridRef = useRef(null);
   
@@ -83,7 +76,6 @@ export default function Works() {
     restDelta: 0.001
   });
 
-  // RESTORED: Cascading upwards by pulling the taller columns UP
   const yFast = useTransform(smoothProgress, [0, 1], ["0%", "-33.33%"]);
   const yMedium = useTransform(smoothProgress, [0, 1], ["0%", "-13.40%"]);
   const ySlow = useTransform(smoothProgress, [0, 1], ["0%", "16.50%"]);
@@ -104,7 +96,6 @@ export default function Works() {
         className="w-full h-auto block object-cover transition-transform duration-700 group-hover:scale-110"
       />
       
-      {/* Dynamic Overlay Color Retained! */}
       <div 
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-8 text-center backdrop-blur-sm z-20"
         style={{ backgroundColor: work.overlayColor }}
@@ -125,7 +116,7 @@ export default function Works() {
   return (
     <div className="w-full relative overflow-hidden bg-[#FCFAF8] min-h-screen flex flex-col">
       
-      {/* --- HEADER --- */}
+      {/* --- header --- */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-4 z-50 pointer-events-auto bg-transparent">
         <a href="/">
           <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain cursor-pointer" />
@@ -139,7 +130,7 @@ export default function Works() {
         </nav>
       </header>
 
-      {/* --- EXHIBITS SECTION --- */}
+      {/* --- exhibits --- */}
       <section className="relative w-full max-w-[1800px] mx-auto px-4 md:px-12 pt-24 pb-24 z-10 flex flex-col items-center">
         <div className="w-full flex justify-center mb-12">
           <h1 className="text-3xl md:text-[6rem] lg:text-[7.5rem] leading-none font-bold font-[family-name:var(--font-playfair)] text-[#2B3A4A] tracking-tighter text-center">
@@ -177,8 +168,7 @@ export default function Works() {
         </motion.div>
       </section>
 
-      {/* --- WORKS SECTION --- */}
-      {/* Changed pb-16 to pb-0 to remove excess padding */}
+      {/* --- works --- */}
       <section className="relative w-full max-w-[1600px] mx-auto px-12 pt-16 pb-0 z-10 flex flex-col items-center">
         <h2 className="text-6xl font-bold font-[family-name:var(--font-playfair)] text-[#2A2A2A] tracking-tighter mb-2">
           Work
@@ -187,8 +177,7 @@ export default function Works() {
           Click on the card to read and see some of the works I&apos;ve made!
         </p>
 
-        {/* Dynamic 3-Column Parallax Grid */}
-        {/* Replaced the percentage margin with massive, concrete REM values to forcefully eat up the physical empty space! */}
+        {/* dynamic 3-column parallax grid */}
         <div ref={gridRef} className="flex flex-col md:flex-row gap-6 md:gap-10 w-full items-start -mb-[50rem] md:-mb-[40rem] lg:-mb-[40rem]">
           
           <motion.div style={{ y: yFast }} className="flex flex-col gap-6 md:gap-10 w-full md:w-1/3">
@@ -206,33 +195,22 @@ export default function Works() {
         </div>
       </section>
 
-      {/* --- SOCIAL CONNECTIONS --- */}
-      <section className="relative w-full flex flex-col items-center pb-8 z-30 mt-auto">
+      {/* social connections icons */}
+      <section className="relative w-full flex flex-col items-center pb-2 z-30 mt-1">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-xl mb-4 italic tracking-wide">let&apos;s connect!</p>
-          
-          {/* We add 'relative' here so the absolute image knows exactly where to anchor itself! */}
-          <div className="relative flex gap-6">
-            
-            {/* The floating handwritten asset */}
-            <img 
-              src="/likewhatyousee.png" 
-              alt="Like what you see?" 
-              // -left and -top pull it outside the box, landing it perfectly top-left of GitHub
-              className="absolute -left-30 md:-left-50 -top-10 md:-top-16 w-32 md:w-48 h-auto pointer-events-none" 
-            />
-
+          <p className="text-sm mb-2 italic tracking-wide">let&apos;s connect!</p>
+          <div className="flex gap-6">
             {[
-              { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
-              { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "#" },
-              { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "#" },
-              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" },
+              { id: 1, src: "/icon-github.png", alt: "GitHub", link: "https://github.com/zsofetch" },
+              { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "https://www.facebook.com/share/1Pc8qRrGwc/" },
+              { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "https://www.linkedin.com/in/zsofy" }, 
+              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "https://www.instagram.com/zsofetch?igsi=MWJiZDZvdHA3a2xmbQ==" }
             ].map((social, index) => (
               <motion.a 
                 key={social.id} 
                 href={social.link} 
                 className="block"
-                // Swapped to the gentle scaling/breathing animation
+                //breathing animation
                 animate={{ scale: [1, 1.08, 1] }} 
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
                 whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
@@ -248,7 +226,7 @@ export default function Works() {
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
+      {/* --- footer --- */}
       <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50">
         <span className="italic">layout inspired by @ciaragan</span>
         <a href="mailto:antolijaozsofia@gmail.com" className="hover:text-zinc-300 transition-colors underline underline-offset-4 decoration-1">

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 
-// The array of your specific clothing/testimonial images
 const stackImages = [
   "/shop-turtleneck.jpg",
   "/shop-sagecami.jpg",
@@ -13,9 +12,9 @@ const stackImages = [
   "/shop-f21.jpg",
 ]; 
 
-// The physics for the messy stack and the hover fan-out
+// messy stack and the hover fan-out
 const stackVariants = {
-  // The messy pile when the mouse is NOT hovering
+  // the messy pile when the mouse is NOT hovering
   idle: (i: number) => ({
     x: i * 3, 
     y: i * -2,
@@ -23,9 +22,9 @@ const stackVariants = {
     scale: 1,
     transition: { type: "spring", stiffness: 300, damping: 25 }
   }),
-  // The fan-out spread when the mouse IS hovering
+  // the fan-out spread when the mouse IS hovering
   hover: (i: number) => {
-    // Reduced the spread from 70 to 50 so it fits in the shorter screen height!
+    // reduced the spread from 70 to 50 so it fits in the shorter screen height!
     const yOffset = (i - 3) * 50; 
     const xOffset = i % 2 === 0 ? -40 : 40; 
     const rotation = i % 2 === 0 ? -8 : 8;
@@ -44,7 +43,7 @@ export default function Shop() {
   return (
     <div className="w-full relative overflow-hidden bg-[#FCFAF8] min-h-screen flex flex-col">
       
-      {/* --- HEADER --- */}
+      {/* --- header --- */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-4 z-50 pointer-events-auto bg-transparent">
         <a href="/">
           <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain cursor-pointer" />
@@ -58,22 +57,18 @@ export default function Shop() {
         </nav>
       </header>
 
-      {/* --- SHOP LAYOUT --- */}
-      {/* Reduced padding to bring the grid up slightly higher on the screen */}
       <main className="flex-grow w-full max-w-[1700px] mx-auto px-6 md:px-10 pt-10 pb-30 flex items-center justify-center z-10">
         
-        {/* The Master 12-Column Grid */}
-        {/* Reduced max-height to 550px so it comfortably fits a 1080p laptop screen */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 w-full h-auto lg:h-[600px]">
           
-          {/* 1. LEFT COLLAGE (Spans 5 of 12 columns) */}
+          {/* left collage spans 5 of 12 columns */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             className="lg:col-span-5 grid grid-cols-5 gap-4 h-[500px] lg:h-full"
           >
-            {/* Left Inner Column: 1 Single Tall Image */}
+            {/* left inner column*/}
             <div className="col-span-3 h-full">
               <img 
                 src="/shop-third.png" 
