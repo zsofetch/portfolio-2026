@@ -3,23 +3,20 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
-// ==========================================
-// 1. CERTIFICATIONS DATA
-// ==========================================
 const certificationsData = [
   {
     id: 1,
     title: "Intermediate Docker",
     image: "/cert-docker.png",
     description:
-      "I took an Intermediate Docker course and learned the basics of containerization, virtualization, and using Kubernetes bla bla bla.",
+      "Learned the core concepts of containerization and virtualization, helping streamline my backend database integrations and full-stack development workflows.",
   },
   {
     id: 2,
     title: "Introduction to Containerization and Virtualization",
     image: "/cert-candv.png",
     description:
-      "Completed comprehensive labs focusing on advanced backup script scheduling, core system administration, and strict switch port channel configurations.",
+      "Explored the underlying architecture of virtual environments, spanning from basic VM setups to managing automated backup script schedules in Linux system administration labs.",
   },
   {
     id: 3,
@@ -27,26 +24,26 @@ const certificationsData = [
       "Research, Development, Extension, and Publications Office (RDEPO) Orientation",
     image: "/cert-rdepo.png",
     description:
-      "Mastered cross-platform application architecture, building functional interfaces utilizing C# and .NET MAUI with integrated Supabase cloud databases.",
+      "Completed the foundational training required for my editorial and journalism work as a staff writer for Today's Carolinian at the University of San Carlos.",
   },
   {
     id: 4,
     title: "CCNA: Introduction to Networks",
     image: "/cert-ccna1.png",
     description:
-      "Completed comprehensive labs focusing on advanced backup script scheduling, core system administration, and strict switch port channel configurations.",
+      "Mastered the fundamentals of network architecture, covering everything from basic IPv4/IPv6 addressing to the theoretical models of routing and switching.",
   },
   {
     id: 5,
     title: "CCNA: Switching, Routing, and Wireless Essentials",
     image: "/cert-ccna2.png",
     description:
-      "Completed comprehensive labs focusing on advanced backup script scheduling, core system administration, and strict switch port channel configurations.",
+      "Got hands-on with networking hardware, running extensive labs on distinct switch port groupings and configuring precise layouts with strict channel limits.",
   },
 ];
 
 export default function About() {
-  // --- SLIDESHOW LOGIC ---
+  // --slideshow logic
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -62,7 +59,8 @@ export default function About() {
 
   return (
     <div className="w-full relative overflow-hidden bg-[#FCFAF8] min-h-screen flex flex-col">
-      {/* --- HEADER --- */}
+      
+      {/* --- header --- */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-4 z-50 pointer-events-auto bg-transparent">
         <a href="/">
           <img
@@ -102,9 +100,9 @@ export default function About() {
         </nav>
       </header>
 
-      {/* --- BIO & PASSPORT SECTION --- */}
+      {/* --- bio and passport --- */}
       <section className="relative w-full pl-12 pr-0 pb-20 flex flex-col md:flex-row items-center justify-between">
-        {/* Left Column: Text */}
+        {/* left side: about me */}
         <div className="w-full md:w-1/2 max-w-2xl flex flex-col gap-2 z-10">
           <h1 className="text-6xl md:text-[5.5rem] text-[#2A2A2A] tracking-tighter leading-[1.05]">
             Hey there! I&apos;m
@@ -142,7 +140,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* Right Column: Passport Graphic */}
+        {/* right side: passport */}
         <div className="w-full md:w-1/2 flex justify-end relative z-10 mt-16 md:mt-0">
           <motion.div
             initial={{ opacity: 0, x: 50 }}
@@ -161,7 +159,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* --- TECH STACK SECTION --- */}
+      {/* --- tech stack --- */}
       <section className="w-full flex flex-col items-center pb-8 z-10">
         <h2 className="text-6xl font-bold text-[#3B1D1D] tracking-tight mb-2">
           Tech Stack.
@@ -178,72 +176,62 @@ export default function About() {
         />
       </section>
 
-      {/* --- CERTIFICATIONS SECTION --- */}
+      {/* --- certifications  --- */}
       <section className="relative w-full bg-[#E5F0F9] py-24 flex flex-col items-center z-10 overflow-hidden">
         <div className="w-full max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* LEFT SIDE: The Notebook Asset & Dynamic Text */}
+          
+          {/* left side: notebook/dynammic description */}
           <div className="relative w-full flex justify-center items-center">
-            {/* Your physical notebook background asset */}
+            
             <img
               src="/notebook-asset.png"
               alt="Notebook"
-              className="w-full max-w-[500px] h-auto object-contain drop-shadow-xl"
+              className="w-full max-w-[800px] h-auto object-contain drop-shadow-xl"
             />
 
-            {/* Absolute positioned text overlay mapped to the notebook halves */}
-            <div className="absolute inset-0 flex flex-col justify-between py-[12%] px-[15%] text-center">
-              {/* Bottom Half: Dynamic Description matching the current slide */}
-              <div className="flex items-center justify-center h-1/2 pt-6">
+            {/* py - lower value = lower padding */}
+            <div className="absolute inset-0 flex flex-col py-[6%] px-[15%] text-justify">
+            
+              <div className="flex flex-col items-center justify-end h-full pb-8">
                 <motion.p
                   key={currentIndex}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  className="font-[family-name:var(--font-jetbrains-mono)] text-[#2B3A4A] text-sm md:text-base mt-130 leading-relaxed max-w-[280px]"
+                  className="font-[family-name:var(--font-jetbrains-mono)] text-[#2B3A4A] text-sm md:text-base leading-relaxed max-w-[300px]"
                 >
                   {certificationsData[currentIndex].description}
                 </motion.p>
               </div>
             </div>
 
-            {/* Decorative Stickers */}
+            {/* stickers kinesu pang cute2 */}
             <motion.img
               src="/sticker-star.png"
               alt="Star Sticker"
               animate={{ scale: [1, 1.06, 1] }}
-              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-8 -right-3 w-20 md:w-29 h-auto drop-shadow-md z-20 hover:scale-110 transition-transform cursor-pointer"
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-8 -right-3 w-28 h-auto drop-shadow-md z-20 hover:scale-110 transition-transform cursor-pointer"
             />
             <motion.img
               src="/sticker-flower.png"
               alt="Flower Sticker"
               animate={{ scale: [1, 1.08, 1] }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-              className="absolute -bottom-9 left-86 w-10 md:w-16 h-auto drop-shadow-md z-10 hover:scale-110 transition-transform cursor-pointer"
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute -bottom-6 left-[60%] md:left-[65%] w-12 md:w-16 h-auto drop-shadow-md z-10 hover:scale-110 transition-transform cursor-pointer"
             />
             <motion.img
               src="/sticker-button.png"
-              alt="Star Sticker"
+              alt="Button Sticker"
               animate={{ scale: [1, 1.08, 1] }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-              className="absolute -top-9 -left-4 w-20 md:w-30 h-auto drop-shadow-md z-20 hover:scale-110 transition-transform cursor-pointer"
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              className="absolute -top-6 -left-4 w-24 md:w-32 h-auto drop-shadow-md z-20 hover:scale-110 transition-transform cursor-pointer"
             />
           </div>
 
-          {/* RIGHT SIDE: The Slideshow Carousel */}
+          {/* right side: slideshow sa certs */}
           <div className="relative w-full flex flex-col items-center">
             <div className="relative w-full aspect-[16/10] bg-white rounded-lg shadow-2xl overflow-hidden group">
-              {/* The Animated Image Slide */}
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
@@ -257,7 +245,6 @@ export default function About() {
                 />
               </AnimatePresence>
 
-              {/* Next Button Overlay */}
               <button
                 onClick={nextSlide}
                 className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg hover:scale-110"
@@ -265,7 +252,6 @@ export default function About() {
                 <img src="/arrow-right.png" alt="Next" className="w-12 h-12" />
               </button>
 
-              {/* Previous Button Overlay */}
               <button
                 onClick={prevSlide}
                 className="absolute left-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg hover:scale-110 rotate-180"
@@ -278,7 +264,6 @@ export default function About() {
               </button>
             </div>
 
-            {/* Dot Navigation Indicators */}
             <div className="flex gap-3 mt-8">
               {certificationsData.map((_, idx) => (
                 <button
@@ -297,35 +282,31 @@ export default function About() {
         </div>
       </section>
 
-      {/* --- SOCIAL CONNECTIONS --- */}
-      {/* Added the matching baby blue background, removed mt-4 to kill the white gap, and added pt-4 for perfect spacing! */}
-
-      <section className="relative w-full bg-[#E5F0F9] flex flex-col items-center pt-4 pb-12 z-30">
+      {/* --- social connections icons --- */}
+      <section className="relative w-full bg-[#E5F0F9] flex flex-col items-center pb-2 z-30">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-xl mb-4 italic tracking-wide">
-            let&apos;s connect!
-          </p>
-          {/* We add 'relative' here so the absolute image knows exactly where to anchor itself! */}
+          <p className="text-sm mb-2 italic tracking-wide"> let&apos;s connect! </p>
           <div className="relative flex gap-6">
-            {/* The floating handwritten asset */}
+           
+           {/* like what u see bs */}
             <img
               src="/likewhatyousee.png"
               alt="Like what you see?"
-              // -left and -top pull it outside the box, landing it perfectly top-left of GitHub
-              className="absolute -left-30 md:-left-50 -top-10 md:-top-16 w-32 md:w-48 h-auto pointer-events-none"
+              className="absolute -left-43 md:-left-48 -top-10 md:-top-20 w-32 md:w-48 h-auto pointer-events-none"
             />
-            {/* <div className="flex gap-6"> */}
+            
             {[
               { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
               { id: 2, src: "/icon-fb.png", alt: "Facebook", link: "#" },
               { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "#" },
-              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" },
+              { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" }
             ].map((social, index) => (
+             
               <motion.a 
                 key={social.id} 
                 href={social.link} 
                 className="block"
-                // Swapped to the gentle scaling/breathing animation
+                //breathing animation
                 animate={{ scale: [1, 1.08, 1] }} 
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
                 whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
@@ -340,6 +321,8 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      
 
       {/* --- FOOTER --- */}
       <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50">

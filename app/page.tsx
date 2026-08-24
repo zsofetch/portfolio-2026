@@ -236,7 +236,7 @@ export default function Home() {
       {/* social connections icons */}
       <section className="relative w-full flex flex-col items-center pb-2 z-30 mt-1">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-xl mb-2 italic tracking-wide">let&apos;s connect!</p>
+          <p className="text-sm mb-2 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
             {[
               { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
