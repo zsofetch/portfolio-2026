@@ -1,7 +1,5 @@
 "use client";
-//edits: need to change the bouncing animation sa "whats in the cards for us" 
-//need to change "pick a card, any card!" to be fixed in place and not move with the cards
-//footer: need to change bouncing animations to breathing animations for the social icons and make "lets connect" in a prettier/personalized font
+
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import gsap from "gsap";
@@ -46,8 +44,6 @@ const scrapbookItems = [
   { id: 25, src: "/clip.png", alt: "Clip", x: 205, y: -260, rotate: 6, width: 130 }
 ];
 
-
-//-- card deck 
 const deckCards = [
   {
     id: 1,
@@ -90,7 +86,6 @@ const deckCards = [
 //-- playing card 
 interface CardProps {
   card: (typeof deckCards)[0];
-  // pass the raw MotionValue directly now
   progress: MotionValue<number>;
 }
 
@@ -128,7 +123,7 @@ export default function Home() {
   const vinylRef = useRef<HTMLImageElement>(null);
   const cardsSectionRef = useRef<HTMLDivElement>(null);
 
-  // 2. GSAP ScrollTrigger for the vinyl Record
+  // -- GSAP ScrollTrigger for the vinyl
   useGSAP(() => {
     gsap.to(vinylRef.current, {
       rotation: 360,
@@ -142,10 +137,10 @@ export default function Home() {
     });
   }, { scope: containerRef });
 
-  // FRAMER: Card Spread Scroll Tracker (Tied to the cards section, not a huge gap)
+  // --framer: card spread scroll tracker (tied to the cards section, not a huge gap)
   const { scrollYProgress } = useScroll({
     target: cardsSectionRef,
-    // Starts spreading when section is 80% down the screen, finishes when centered
+    // starts spreading when section is 80% down the screen, finishes when centered
     offset: ["start 80%", "center center"],
   });
 
@@ -154,7 +149,7 @@ export default function Home() {
   return (
     <div ref={containerRef} className="w-full relative overflow-hidden bg-[#FCFAF8]">
 
-      {/* --- HEADER --- */}
+      {/* --- header --- */}
       <header className="fixed top-0 left-0 w-full flex justify-between items-start px-12 pt-4 z-50 pointer-events-auto bg-transparent">
          <a href="/">
           <img src="/logo.png" alt="Zsofia Antolijao Logo" className="w-36 h-auto object-contain cursor-pointer"/>
@@ -169,7 +164,7 @@ export default function Home() {
       </header>
 
 
-      {/* --- HERO COLLAGE SECTION --- */}
+      {/* --- collage --- */}
       <section className="relative w-full h-screen flex items-center justify-center">
         <motion.div 
           initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut" }}
@@ -178,7 +173,7 @@ export default function Home() {
           <img src="/profile.png" alt="Zsofia Antolijao" className="w-full h-full object-cover"/>
         </motion.div>
 
-        {/* The Splashing Scrapbook Elements */}
+        {/* splash screen scrapbook thingie */}
         {scrapbookItems.map((item, index) => (
           <motion.div
             key={item.id}
@@ -191,65 +186,57 @@ export default function Home() {
           </motion.div>
         ))}
       </section>
-
-      {/*to modify*/}
     
-      {/* --- SPINNING VINYL RECORD --- */}
+      {/* --- spinning vinyl record --- */}
       <div className="absolute top-[55vh] -left-[200px] z-40 pointer-events-none">
         <div ref={vinylRef} className="relative w-[550px] h-[550px] flex items-center justify-center">
           <img src="/vinyl.png" alt="Spinning Vinyl" className="absolute w-[450px] h-[450px] object-cover rounded-full drop-shadow-2xl" />
           <svg viewBox="0 0 250 250" className="absolute w-full h-full drop-shadow-sm">
             <path id="textCurve" d="M 15,125 a 110,110 0 1,1 220,0 a 110,110 0 1,1 -220,0" fill="transparent" />
-            <text className="text-[8px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 uppercase italic">
+            <text className="text-[9px] font-[family-name:var(--font-playfair)] tracking-[0.3em] fill-slate-600 lowercase italic">
               <textPath href="#textCurve" startOffset="25%">scroll down</textPath>
             </text>
           </svg>
         </div>
       </div>
 
-      {/* --- SCROLL-TRIGGERED CARD DECK SECTION --- */}
-      {/* 220vh gives you the scroll runway to watch them spread slowly */}
+      {/* --- scroll-triggered card deck section --- */}
       <section ref={cardsSectionRef} className="relative w-full z-30 flex flex-col items-center pt-24 pb-16 min-h-screen">
         
-        {/* The Wavy Title */}
-        <h2 className="text-6xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 flex">
-          {titleText.split("").map((char, index) => (
-            <motion.span
-              key={index}
-              // Alternates between bouncing up first vs bouncing down first based on odd/even index
-              animate={{ y: index % 2 === 0 ? [-3, 3, -3] : [3, -3, 3] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.05 }}
-              style={{ display: "inline-block", whiteSpace: "pre" }} // whiteSpace: pre preserves spaces!
-            >
-              {char}
-            </motion.span>
-          ))}
+        {/* title */}
+        <h2 className="text-7xl font-bold font-[family-name:var(--font-playfair)] text-red-900 mb-16 z-10 text-center">
+          {titleText}
         </h2>
 
-        {/* The Cards Wrapper */}
+        {/* cards warpper */}
         <div className="relative flex items-center justify-center w-full max-w-6xl" style={{ height: 480 }}>
           
           {deckCards.map((card) => (
             <PlayingCard key={card.id} card={card} progress={scrollYProgress} />
           ))}
 
-          {/* "Pick a card" label - FIXED*/}
-          <motion.p
+          {/* pick a card, any card! */}
+          <motion.div
             initial={{ opacity: 0, y: 70 }} 
-            whileInView={{ opacity: 1, x:-70, y: 70 }} 
+            whileInView={{ opacity: 1, x: -70, y: 70 }} 
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="absolute -bottom-2 left-4 left-[calc(50%-540px)] z-40 font-[family-name:var(--font-caprasimo)] text-slate-800 text-2xl leading-tight pointer-events-none"
+            className="absolute -bottom-2 left-4 md:left-[calc(50%-540px)] z-40 pointer-events-none"
           >
-            pick a card,<br />any card!
-          </motion.p>
+            <motion.img
+              src="/pickacard.png"
+              alt="Pick a card, any card!"
+              animate={{ scale: [1, 1.06, 1] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+              className="w-40 md:w-40 h-auto drop-shadow-sm"
+            />
+          </motion.div>
         </div>
       </section>
 
       {/* social connections icons */}
-      {/* Reduced pb-16 to pb-8 to drag the footer up! */}
-      <section className="relative w-full flex flex-col items-center pb-2 z-30 mt-2">
+      <section className="relative w-full flex flex-col items-center pb-2 z-30 mt-1">
         <div className="flex flex-col items-center font-[family-name:var(--font-playfair)] text-slate-700">
-          <p className="text-xl mb-4 italic tracking-wide">let&apos;s connect!</p>
+          <p className="text-xl mb-2 italic tracking-wide">let&apos;s connect!</p>
           <div className="flex gap-6">
             {[
               { id: 1, src: "/icon-github.png", alt: "GitHub", link: "#" },
@@ -258,18 +245,26 @@ export default function Home() {
               { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" }
             ].map((social, index) => (
               <motion.a 
-                key={social.id} href={social.link} className="block"
-                animate={{ y: [0, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-                whileHover={{ scale: 1.1 }}
+                key={social.id} 
+                href={social.link} 
+                className="block"
+                //breathing animation
+                animate={{ scale: [1, 1.08, 1] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+                whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
               >
-                <img src={social.src} alt={social.alt} className="w-[60px] h-[60px] object-contain hover:drop-shadow-md transition-all" />
+                <img 
+                  src={social.src} 
+                  alt={social.alt} 
+                  className="w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain hover:drop-shadow-md transition-all" 
+                />
               </motion.a>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
+      {/* --- footer --- */}
       <footer className="relative w-full bg-[#2B3A4A] text-[#FCFAF8] py-4 px-12 flex justify-between items-center text-sm font-[family-name:var(--font-playfair)] z-50">
         <span className="italic">layout inspired by @ciaragan</span>
         <a href="mailto:antolijaozsofia@gmail.com" className="hover:text-zinc-300 transition-colors underline underline-offset-4 decoration-1">

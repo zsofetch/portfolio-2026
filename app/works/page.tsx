@@ -228,18 +228,19 @@ export default function Works() {
               { id: 3, src: "/icon-linkedin.png", alt: "LinkedIn", link: "#" },
               { id: 4, src: "/icon-insta.png", alt: "Instagram", link: "#" },
             ].map((social, index) => (
-              <motion.a
-                key={social.id}
-                href={social.link}
+              <motion.a 
+                key={social.id} 
+                href={social.link} 
                 className="block"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-                whileHover={{ scale: 1.1 }}
+                // Swapped to the gentle scaling/breathing animation
+                animate={{ scale: [1, 1.08, 1] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+                whileHover={{ scale: 1.15, transition: { duration: 0.2 } }}
               >
-                <img
-                  src={social.src}
-                  alt={social.alt}
-                  className="w-[60px] h-[60px] object-contain hover:drop-shadow-md transition-all relative z-10"
+                <img 
+                  src={social.src} 
+                  alt={social.alt} 
+                  className="w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain hover:drop-shadow-md transition-all" 
                 />
               </motion.a>
             ))}
