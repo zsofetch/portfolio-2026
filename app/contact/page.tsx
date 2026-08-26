@@ -1,3 +1,5 @@
+// wait lng my streak
+
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
